@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معايدة مدرسة ابن سينا - نحف</title>
+    <title>معايدة مدرسة ابن سينا الثانوية - نحف</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --gold: #d4af37; --dark-bg: #050a10; }
         body { margin: 0; background: var(--dark-bg); font-family: 'Segoe UI', Tahoma, sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
 
-        /* شاشة الدخول الاحترافية */
         #setup-screen { text-align: center; background: #0a141d; padding: 40px; border-radius: 25px; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); z-index: 200; width: 330px; }
         
-        /* منطقة البطاقة */
-        #experience-area { display: none; position: relative; width: 360px; height: 600px; z-index: 10; }
+        #experience-area { display: none; position: relative; width: 360px; height: 620px; z-index: 10; }
         canvas#scratch { position: absolute; top: 0; left: 0; z-index: 20; border-radius: 20px; cursor: crosshair; touch-action: none; }
         
         #card-content { 
@@ -22,19 +20,17 @@
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 35px 20px; box-sizing: border-box; text-align: center;
         }
 
-        .school-header { color: var(--gold); font-weight: bold; font-size: 1.3rem; margin-bottom: 10px; }
-        h1 { color: var(--gold); font-size: 2.1rem; margin: 15px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); line-height: 1.4; }
+        .school-header { color: var(--gold); font-weight: bold; font-size: 1.25rem; margin-bottom: 5px; }
+        h1 { color: var(--gold); font-size: 1.9rem; margin: 15px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); line-height: 1.4; }
         
-        .greeting-message { font-size: 1.05rem; line-height: 1.8; color: #f0f0f0; margin: 10px 0; padding: 0 10px; }
-        .teacher-box { font-size: 1.5rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); width: 85%; margin: 10px 0; }
+        .greeting-message { font-size: 1.05rem; line-height: 1.8; color: #f0f0f0; margin: 5px 0; padding: 0 10px; }
+        .teacher-box { font-size: 1.6rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); width: 85%; margin: 10px 0; }
 
-        /* التوقيعات الرسمية */
         .signatures { display: flex; justify-content: space-between; width: 100%; margin-top: 25px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 15px; }
         .sig-box { flex: 1; font-size: 0.85rem; color: var(--gold); line-height: 1.6; }
         .sig-right { text-align: right; }
         .sig-left { text-align: left; }
 
-        /* تأثير الورود السيريالي */
         .flower { position: fixed; top: -50px; z-index: 5; pointer-events: none; animation: fall linear forwards; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); }
         @keyframes fall {
             0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
@@ -43,19 +39,20 @@
         }
 
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 360px; margin-top: 15px; z-index: 30; }
-        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; font-family: inherit; }
         .btn-entry { background: var(--gold); color: black; width: 100%; margin-top: 20px; font-size: 1.1rem; }
         .btn-wa { background: #25D366; color: white; }
         .btn-save { background: #3498db; color: white; }
+        .btn-mute { grid-column: span 2; background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--gold); margin-top: 5px; }
     </style>
 </head>
 <body>
 
     <div id="setup-screen">
-        <img src="logo.png" style="width: 110px;">
-        <h2 style="color: var(--gold);">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</h2>
-        <p>يرجى إدخال اسم المعلم/ة:</p>
-        <input type="text" id="userName" placeholder="الاسم هنا..." 
+        <img src="logo.png" style="width: 100px;">
+        <h2 style="color: var(--gold); font-size: 1.4rem;">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</h2>
+        <p>يُرْجَى إِدْخَالُ اسْمِ الْمُعَلِّمِ/ةِ:</p>
+        <input type="text" id="userName" placeholder="الِاسْمُ هُنَا..." 
                style="background: transparent; border: none; border-bottom: 2px solid var(--gold); color: white; text-align: center; width: 100%; padding: 10px; outline: none; font-size: 1.2rem;">
         <button class="btn btn-entry" onclick="startApp()">اِستلام التَّهنئة ✨</button>
     </div>
@@ -63,12 +60,12 @@
     <div id="experience-area">
         <div id="card-content">
             <div class="school-header">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</div>
-            <img src="logo.png" style="width: 95px;">
+            <img src="logo.png" style="width: 90px;">
             
             <h1>✨ عِيدُ فِطْرٍ مُبَارَكٌ ✨</h1>
             
             <div class="greeting-message">
-                تَتَقَدَّمُ إِدَارَةُ مَدْرَسَةِ اِبْنِ سِينَا بِأَسْمَى آيَاتِ التَّهْنِئَةِ وَالتَّبْرِيكَاتِ بِمُنَاسَبَةِ حُلُولِ الْعِيدِ السَّعِيدِ لِلْمُعَلِّمِ/ةِ الْفَاضِلِ/ةِ:
+                تَتَقَدَّمُ إِدَارَةُ مَدْرَسَةِ اِبْنِ سِينَا بِأَسْمَى آيَاتِ التَّهْنِئَةِ وَالتَّبْرِيكَاتِ بِمُنَاسَبَةِ حُلُولِ عِيدِ الْفِطْرِ السَّعِيدِ لِلْمُعَلِّمِ/ةِ الْفَاضِلِ/ةِ:
             </div>
             
             <div id="finalName" class="teacher-box"></div>
@@ -92,6 +89,7 @@
     <div class="controls" id="controls">
         <button class="btn btn-wa" onclick="share()">واتساب 📱</button>
         <button class="btn btn-save" onclick="download()">حفظ الصورة 🖼️</button>
+        <button id="muteBtn" class="btn btn-mute" onclick="toggleMute()">🔇 كتم الصوت</button>
     </div>
 
     <audio id="music" src="music.mp3" loop></audio>
@@ -100,12 +98,13 @@
         const canvas = document.getElementById('scratch');
         const ctx = canvas.getContext('2d');
         const audio = document.getElementById('music');
+        const muteBtn = document.getElementById('muteBtn');
         let drawing = false;
         let started = false;
 
         function startApp() {
             const name = document.getElementById('userName').value;
-            if(!name) return alert("يرجى إدخال الاسم");
+            if(!name) return alert("لطفاً، أدخل الاسم");
             document.getElementById('finalName').innerText = name;
             document.getElementById('setup-screen').style.display = 'none';
             document.getElementById('experience-area').style.display = 'block';
@@ -114,14 +113,24 @@
         }
 
         function initScratch() {
-            canvas.width = 360; canvas.height = 600;
+            canvas.width = 360; canvas.height = 620;
             ctx.fillStyle = '#d4af37';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'black';
             ctx.font = 'bold 20px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('اِقشط هنا لِاستلام التَّهنئة الرَّسمية ✨', 180, 300);
+            ctx.fillText('اِقشط هنا لِاستلام التَّهنئة الرَّسمية ✨', 180, 310);
             ctx.globalCompositeOperation = 'destination-out';
+        }
+
+        function toggleMute() {
+            if (audio.muted) {
+                audio.muted = false;
+                muteBtn.innerText = "🔇 كتم الصوت";
+            } else {
+                audio.muted = true;
+                muteBtn.innerText = "🔊 تشغيل الصوت";
+            }
         }
 
         function createFlower() {
@@ -138,10 +147,10 @@
 
         function scratch(e) {
             if(!drawing) return;
-            if(!started) { audio.play(); started = true; setInterval(createFlower, 250); }
+            if(!started) { audio.play().catch(() => {}); started = true; setInterval(createFlower, 250); }
             const rect = canvas.getBoundingClientRect();
-            const x = (e.pageX || e.touches[0].pageX) - rect.left;
-            const y = (e.pageY || e.touches[0].pageY) - rect.top;
+            const x = (e.pageX || (e.touches ? e.touches[0].pageX : 0)) - rect.left;
+            const y = (e.pageY || (e.touches ? e.touches[0].pageY : 0)) - rect.top;
             ctx.beginPath();
             ctx.arc(x, y, 40, 0, Math.PI * 2);
             ctx.fill();
@@ -155,7 +164,7 @@
 
         function share() {
             const n = document.getElementById('finalName').innerText;
-            window.open(`https://wa.me/?text=✨ تهنئة عيد الفطر الرسمية للمعلم/ة: ${n} %0Aمن مدرسة ابن سينا - نحف %0Aشاهدها هنا: %0A${window.location.href}`);
+            window.open(`https://wa.me/?text=✨ تهنئة عيد الفطر الرسمية للمعلم/ة: ${n} %0Aمن مدرسة ابن سينا الثانوية - نحف %0Aشاهدها هنا: %0A${window.location.href}`);
         }
 
         function download() {

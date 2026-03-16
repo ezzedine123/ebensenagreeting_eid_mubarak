@@ -5,44 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>معايدة مدرسة ابن سينا</title>
     <style>
-        body { 
-            margin: 0; padding: 0;
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; background: #0b1a2a; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; color: #d4af37;
-        }
-        .card {
-            text-align: center; background: rgba(255, 255, 255, 0.05);
-            padding: 40px; border-radius: 20px; border: 1px solid #d4af37;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-        }
-        .logo { width: 120px; height: 120px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 20px; }
-        .btn { 
-            background: #d4af37; color: #000; padding: 12px 25px; 
-            border: none; border-radius: 50px; cursor: pointer; 
-            font-weight: bold; font-size: 1.1rem; transition: 0.3s;
-        }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 0 15px #d4af37; }
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #050a10; font-family: sans-serif; color: #d4af37; overflow: hidden; }
+        .card { text-align: center; background: #0a141d; padding: 40px; border-radius: 20px; border: 1px solid #d4af37; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); width: 85%; max-width: 400px; position: relative; z-index: 1; }
+        .logo { width: 120px; height: 120px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 20px; object-fit: cover; }
+        h1 { font-size: 2rem; margin: 10px 0; }
+        p { color: #fff; font-size: 1.1rem; opacity: 0.9; }
+        .btn { background: #d4af37; color: #000; padding: 15px 30px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.2rem; margin-top: 25px; width: 100%; transition: 0.3s; }
+        .btn:hover { background: #fff; box-shadow: 0 0 20px #d4af37; transform: scale(1.02); }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <img src="logo.jpg" alt="شعار المدرسة" class="logo">
-        
-        <h1>كل عام وأنتم بخير ✨</h1>
-        <p>مدرسة ابن سينا الشاملة تهنئكم بحلول العيد</p>
+        <img src="logo.png" alt="شعار المدرسة" class="logo">
+        <h1>عيدكم مبارك ✨</h1>
+        <p>مدرسة ابن سينا الشاملة</p>
+        <p style="font-size: 0.8rem; color: #d4af37;">بإشراف الأستاذ ذيبس عز الدين</p>
 
-        <button class="btn" onclick="startApp()">اضغط لاستلام المعايدة 🎵</button>
+        <button class="btn" onclick="playMusic()">استلام المعايدة 🎵</button>
         
-        <audio id="bgMusic" src="music.mp3"></audio>
+        <audio id="bgMusic" src="music.mp3" preload="auto"></audio>
     </div>
 
     <script>
-        function startApp() {
+        function playMusic() {
             var audio = document.getElementById("bgMusic");
-            audio.play().catch(function(error) {
-                alert("يرجى التأكد من رفع ملف الموسيقى بشكل صحيح");
+            audio.play().then(() => {
+                console.log("الموسيقى تعمل بنجاح");
+            }).catch(err => {
+                alert("يرجى التأكد من أن ملف music.mp3 مرفوع بحجمه الكامل");
             });
         }
     </script>

@@ -2,45 +2,40 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>معايدة مدرسة ابن سينا الثانوية - نحف</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --gold: #d4af37; --dark-bg: #050a10; }
-        body { margin: 0; background: var(--dark-bg); font-family: 'Segoe UI', Tahoma, sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
+        body { margin: 0; background: var(--dark-bg); font-family: 'Segoe UI', Tahoma, sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; touch-action: none; }
 
-        #setup-screen { text-align: center; background: #0a141d; padding: 40px; border-radius: 25px; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); z-index: 200; width: 330px; }
+        /* شاشة الدخول */
+        #setup-screen { text-align: center; background: #0a141d; padding: 30px; border-radius: 25px; border: 2px solid var(--gold); z-index: 200; width: 85%; max-width: 330px; box-sizing: border-box; }
         
-        #experience-area { display: none; position: relative; width: 360px; height: 620px; z-index: 10; }
-        canvas#scratch { position: absolute; top: 0; left: 0; z-index: 20; border-radius: 20px; cursor: crosshair; touch-action: none; }
+        /* منطقة التجربة */
+        #experience-area { display: none; position: relative; width: 90vw; max-width: 360px; height: 70vh; max-height: 600px; z-index: 10; margin-bottom: 10px; }
+        canvas#scratch { position: absolute; top: 0; left: 0; z-index: 20; border-radius: 20px; cursor: crosshair; width: 100%; height: 100%; touch-action: none; }
         
         #card-content { 
             background: linear-gradient(135deg, #0a141d 0%, #1a2a3a 100%);
             width: 100%; height: 100%; border-radius: 20px; border: 2px solid var(--gold);
-            display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 35px 20px; box-sizing: border-box; text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 25px 15px; box-sizing: border-box; text-align: center;
         }
 
-        .school-header { color: var(--gold); font-weight: bold; font-size: 1.25rem; margin-bottom: 5px; }
-        h1 { color: var(--gold); font-size: 1.9rem; margin: 15px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); line-height: 1.4; }
-        
-        .greeting-message { font-size: 1.05rem; line-height: 1.8; color: #f0f0f0; margin: 5px 0; padding: 0 10px; }
-        .teacher-box { font-size: 1.6rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); width: 85%; margin: 10px 0; }
+        .school-header { color: var(--gold); font-weight: bold; font-size: 1.1rem; }
+        h1 { color: var(--gold); font-size: 1.8rem; margin: 10px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); line-height: 1.4; }
+        .greeting-message { font-size: 0.95rem; line-height: 1.7; color: #f0f0f0; margin: 5px 0; }
+        .teacher-box { font-size: 1.5rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 10px; border-radius: 12px; border: 1px solid var(--gold); width: 90%; }
 
-        .signatures { display: flex; justify-content: space-between; width: 100%; margin-top: 25px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 15px; }
-        .sig-box { flex: 1; font-size: 0.85rem; color: var(--gold); line-height: 1.6; }
-        .sig-right { text-align: right; }
-        .sig-left { text-align: left; }
+        .signatures { display: flex; justify-content: space-between; width: 100%; margin-top: 15px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 10px; font-size: 0.8rem; }
+        .sig-box { flex: 1; color: var(--gold); line-height: 1.5; }
 
-        .flower { position: fixed; top: -50px; z-index: 5; pointer-events: none; animation: fall linear forwards; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); }
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(60px); opacity: 0; }
-        }
+        .flower { position: fixed; top: -50px; z-index: 5; pointer-events: none; animation: fall linear forwards; }
+        @keyframes fall { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-        .controls { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 360px; margin-top: 15px; z-index: 30; }
-        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; font-family: inherit; }
-        .btn-entry { background: var(--gold); color: black; width: 100%; margin-top: 20px; font-size: 1.1rem; }
+        .controls { display: none; grid-template-columns: 1fr 1fr; gap: 8px; width: 90vw; max-width: 360px; z-index: 30; }
+        .btn { padding: 10px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.9rem; font-family: inherit; }
+        .btn-entry { background: var(--gold); color: black; width: 100%; margin-top: 20px; }
         .btn-wa { background: #25D366; color: white; }
         .btn-save { background: #3498db; color: white; }
         .btn-mute { grid-column: span 2; background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--gold); margin-top: 5px; }
@@ -49,38 +44,24 @@
 <body>
 
     <div id="setup-screen">
-        <img src="logo.png" style="width: 100px;">
-        <h2 style="color: var(--gold); font-size: 1.4rem;">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</h2>
+        <img src="logo.png" style="width: 90px;">
+        <h2 style="color: var(--gold); margin-top: 15px;">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</h2>
         <p>يُرْجَى إِدْخَالُ اسْمِ الْمُعَلِّمِ/ةِ:</p>
-        <input type="text" id="userName" placeholder="الِاسْمُ هُنَا..." 
-               style="background: transparent; border: none; border-bottom: 2px solid var(--gold); color: white; text-align: center; width: 100%; padding: 10px; outline: none; font-size: 1.2rem;">
+        <input type="text" id="userName" placeholder="الِاسْمُ هُنَا..." style="background: transparent; border: none; border-bottom: 2px solid var(--gold); color: white; text-align: center; width: 100%; padding: 10px; font-size: 1.2rem; outline: none;">
         <button class="btn btn-entry" onclick="startApp()">اِستلام التَّهنئة ✨</button>
     </div>
 
     <div id="experience-area">
         <div id="card-content">
             <div class="school-header">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</div>
-            <img src="logo.png" style="width: 90px;">
-            
+            <img src="logo.png" style="width: 80px;">
             <h1>✨ عِيدُ فِطْرٍ مُبَارَكٌ ✨</h1>
-            
-            <div class="greeting-message">
-                تَتَقَدَّمُ إِدَارَةُ مَدْرَسَةِ اِبْنِ سِينَا بِأَسْمَى آيَاتِ التَّهْنِئَةِ وَالتَّبْرِيكَاتِ بِمُنَاسَبَةِ حُلُولِ عِيدِ الْفِطْرِ السَّعِيدِ لِلْمُعَلِّمِ/ةِ الْفَاضِلِ/ةِ:
-            </div>
-            
+            <div class="greeting-message">تَتَقَدَّمُ إِدَارَةُ مَدْرَسَةِ اِبْنِ سِينَا بِأَسْمَى آيَاتِ التَّهْنِئَةِ وَالتَّبْرِيكَاتِ بِمُنَاسَبَةِ حُلُولِ عِيدِ الْفِطْرِ السَّعِيدِ لِلْمُعَلِّمِ/ةِ الْفَاضِلِ/ةِ:</div>
             <div id="finalName" class="teacher-box"></div>
-            
-            <div class="greeting-message" style="font-size: 0.95rem;">
-                نَسْأَلُ اللَّهَ أَنْ يُعِيدَهُ عَلَيْكُمْ بِالْخَيْرِ وَالْيُمْنِ وَالْبَرَكَاتِ، وَكُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ.
-            </div>
-
+            <div class="greeting-message" style="font-size: 0.85rem;">نَسْأَلُ اللَّهَ أَنْ يُعِيدَهُ عَلَيْكُمْ بِالْخَيْرِ وَالْيُمْنِ وَالْبَرَكَاتِ، وَكُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ.</div>
             <div class="signatures">
-                <div class="sig-box sig-right">
-                    مدير المدرسة:<br><b>د. هيثم قادري</b>
-                </div>
-                <div class="sig-box sig-left">
-                    مركز الحوسبة:<br><b>أ. عز الدين دعيبس</b>
-                </div>
+                <div class="sig-box" style="text-align: right;">مدير المدرسة:<br><b>د. هيثم قادري</b></div>
+                <div class="sig-box" style="text-align: left;">مركز الحوسبة:<br><b>أ. عز الدين دعيبس</b></div>
             </div>
         </div>
         <canvas id="scratch"></canvas>
@@ -96,11 +77,11 @@
 
     <script>
         const canvas = document.getElementById('scratch');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
         const audio = document.getElementById('music');
         const muteBtn = document.getElementById('muteBtn');
-        let drawing = false;
-        let started = false;
+        let isDrawing = false;
+        let isStarted = false;
 
         function startApp() {
             const name = document.getElementById('userName').value;
@@ -113,23 +94,49 @@
         }
 
         function initScratch() {
-            canvas.width = 360; canvas.height = 620;
+            const rect = canvas.parentNode.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
             ctx.fillStyle = '#d4af37';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'black';
-            ctx.font = 'bold 20px Arial';
+            ctx.font = 'bold 18px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('اِقشط هنا لِاستلام التَّهنئة الرَّسمية ✨', 180, 310);
+            ctx.fillText('اِقشط هنا لِاستلام التَّهنئة ✨', canvas.width/2, canvas.height/2);
             ctx.globalCompositeOperation = 'destination-out';
         }
 
-        function toggleMute() {
-            if (audio.muted) {
-                audio.muted = false;
-                muteBtn.innerText = "🔇 كتم الصوت";
-            } else {
-                audio.muted = true;
-                muteBtn.innerText = "🔊 تشغيل الصوت";
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function scratch(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 35, 0, Math.PI * 2);
+            ctx.fill();
+            checkProgress();
+        }
+
+        function checkProgress() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            let cleared = 0;
+            for (let i = 3; i < imageData.length; i += 4) { if (imageData[i] === 0) cleared++; }
+            const percent = (cleared / (canvas.width * canvas.height)) * 100;
+
+            if (percent > 2 && !isStarted) {
+                audio.play().catch(() => {});
+                isStarted = true;
+                setInterval(createFlower, 300);
+            }
+            if (percent > 40) { 
+                canvas.style.transition = '1.5s opacity'; 
+                canvas.style.opacity = '0'; 
+                setTimeout(() => canvas.remove(), 1500); 
             }
         }
 
@@ -139,28 +146,22 @@
             f.className = 'flower';
             f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
             f.style.left = Math.random() * 100 + 'vw';
-            f.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            f.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            f.style.fontSize = (Math.random() * 15 + 20) + 'px';
+            f.style.animationDuration = (Math.random() * 2 + 4) + 's';
             document.body.appendChild(f);
-            setTimeout(() => f.remove(), 8000);
+            setTimeout(() => f.remove(), 6000);
         }
 
-        function scratch(e) {
-            if(!drawing) return;
-            if(!started) { audio.play().catch(() => {}); started = true; setInterval(createFlower, 250); }
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.pageX || (e.touches ? e.touches[0].pageX : 0)) - rect.left;
-            const y = (e.pageY || (e.touches ? e.touches[0].pageY : 0)) - rect.top;
-            ctx.beginPath();
-            ctx.arc(x, y, 40, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        canvas.addEventListener('mousedown', () => drawing = true);
-        window.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mousedown', () => isDrawing = true);
+        window.addEventListener('mouseup', () => isDrawing = false);
         canvas.addEventListener('mousemove', scratch);
-        canvas.addEventListener('touchstart', (e) => { drawing = true; scratch(e); });
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
         canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); });
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            muteBtn.innerText = audio.muted ? "🔊 تشغيل الصوت" : "🔇 كتم الصوت";
+        }
 
         function share() {
             const n = document.getElementById('finalName').innerText;

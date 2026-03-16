@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معايدة مدرسة ابن سينا الشاملة</title>
+    <title>معايدة مدرسة ابن سينا - نحف</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --gold: #d4af37; --dark-bg: #050a10; }
         body { margin: 0; background: var(--dark-bg); font-family: 'Segoe UI', Tahoma, sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
 
-        /* شاشة الدخول */
-        #setup-screen { text-align: center; background: #0a141d; padding: 40px; border-radius: 25px; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); z-index: 200; width: 320px; }
+        /* شاشة الدخول الاحترافية */
+        #setup-screen { text-align: center; background: #0a141d; padding: 40px; border-radius: 25px; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); z-index: 200; width: 330px; }
         
-        /* منطقة البطاقة والقشط */
-        #experience-area { display: none; position: relative; width: 360px; height: 580px; z-index: 10; }
+        /* منطقة البطاقة */
+        #experience-area { display: none; position: relative; width: 360px; height: 600px; z-index: 10; }
         canvas#scratch { position: absolute; top: 0; left: 0; z-index: 20; border-radius: 20px; cursor: crosshair; touch-action: none; }
         
         #card-content { 
             background: linear-gradient(135deg, #0a141d 0%, #1a2a3a 100%);
             width: 100%; height: 100%; border-radius: 20px; border: 2px solid var(--gold);
-            display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 30px 20px; box-sizing: border-box; text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 35px 20px; box-sizing: border-box; text-align: center;
         }
 
-        .school-header { color: var(--gold); font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
-        h1 { color: var(--gold); font-size: 2.4rem; margin: 10px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); }
+        .school-header { color: var(--gold); font-weight: bold; font-size: 1.3rem; margin-bottom: 10px; }
+        h1 { color: var(--gold); font-size: 2.1rem; margin: 15px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); line-height: 1.4; }
         
-        .greeting-message { font-size: 1.1rem; line-height: 1.8; color: #f0f0f0; margin: 15px 0; }
-        .teacher-box { font-size: 1.5rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); width: 80%; }
+        .greeting-message { font-size: 1.05rem; line-height: 1.8; color: #f0f0f0; margin: 10px 0; padding: 0 10px; }
+        .teacher-box { font-size: 1.5rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); width: 85%; margin: 10px 0; }
 
-        /* التوقيعات المتوازنة */
-        .signatures { display: flex; justify-content: space-between; width: 100%; margin-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 15px; }
-        .sig-box { flex: 1; font-size: 0.85rem; color: var(--gold); }
+        /* التوقيعات الرسمية */
+        .signatures { display: flex; justify-content: space-between; width: 100%; margin-top: 25px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 15px; }
+        .sig-box { flex: 1; font-size: 0.85rem; color: var(--gold); line-height: 1.6; }
         .sig-right { text-align: right; }
         .sig-left { text-align: left; }
 
-        /* تأثير الورود */
+        /* تأثير الورود السيريالي */
         .flower { position: fixed; top: -50px; z-index: 5; pointer-events: none; animation: fall linear forwards; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); }
         @keyframes fall {
             0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
             10% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(50px); opacity: 0; }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(60px); opacity: 0; }
         }
 
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 360px; margin-top: 15px; z-index: 30; }
-        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .btn-entry { background: var(--gold); color: black; width: 100%; margin-top: 20px; font-size: 1.1rem; }
         .btn-wa { background: #25D366; color: white; }
         .btn-save { background: #3498db; color: white; }
@@ -52,37 +52,37 @@
 <body>
 
     <div id="setup-screen">
-        <img src="logo.png" style="width: 100px;">
-        <h2 style="color: var(--gold);">مدرسة ابن سينا الشاملة</h2>
-        <p>أهلاً بك.. يرجى إدخال الاسم:</p>
+        <img src="logo.png" style="width: 110px;">
+        <h2 style="color: var(--gold);">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</h2>
+        <p>يرجى إدخال اسم المعلم/ة:</p>
         <input type="text" id="userName" placeholder="الاسم هنا..." 
                style="background: transparent; border: none; border-bottom: 2px solid var(--gold); color: white; text-align: center; width: 100%; padding: 10px; outline: none; font-size: 1.2rem;">
-        <button class="btn btn-entry" onclick="startApp()">استلام التهنئة الرسمية ✨</button>
+        <button class="btn btn-entry" onclick="startApp()">اِستلام التَّهنئة ✨</button>
     </div>
 
     <div id="experience-area">
         <div id="card-content">
-            <div class="school-header">مدرسة ابن سينا الشاملة - الناصرة</div>
-            <img src="logo.png" style="width: 90px;">
+            <div class="school-header">اِبْنُ سِينَا الثَّانَوِيَّةُ - نَحْف</div>
+            <img src="logo.png" style="width: 95px;">
             
-            <h1>عيد مبارك ✨</h1>
+            <h1>✨ عِيدُ فِطْرٍ مُبَارَكٌ ✨</h1>
             
             <div class="greeting-message">
-                تتقدم إدارة مدرسة ابن سينا بأسمى آيات التهنئة والتبريكات بمناسبة حلول العيد السعيد للمعلم/ة الفاضل/ة:
+                تَتَقَدَّمُ إِدَارَةُ مَدْرَسَةِ اِبْنِ سِينَا بِأَسْمَى آيَاتِ التَّهْنِئَةِ وَالتَّبْرِيكَاتِ بِمُنَاسَبَةِ حُلُولِ الْعِيدِ السَّعِيدِ لِلْمُعَلِّمِ/ةِ الْفَاضِلِ/ةِ:
             </div>
             
             <div id="finalName" class="teacher-box"></div>
             
-            <div class="greeting-message" style="font-size: 0.9rem;">
-                نسأل الله أن يعيده عليكم بالخير واليمن والبركات وكل عام وأنتم بخير.
+            <div class="greeting-message" style="font-size: 0.95rem;">
+                نَسْأَلُ اللَّهَ أَنْ يُعِيدَهُ عَلَيْكُمْ بِالْخَيْرِ وَالْيُمْنِ وَالْبَرَكَاتِ، وَكُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ.
             </div>
 
             <div class="signatures">
                 <div class="sig-box sig-right">
-                    مدير المدرسة<br><b>د. هيثم قادري</b>
+                    مدير المدرسة:<br><b>د. هيثم قادري</b>
                 </div>
                 <div class="sig-box sig-left">
-                    مركز الحوسبة<br><b>أ. عز الدين دعيبس</b>
+                    مركز الحوسبة:<br><b>أ. عز الدين دعيبس</b>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
 
         function startApp() {
             const name = document.getElementById('userName').value;
-            if(!name) return alert("يرجى إدخال الاسم أولاً");
+            if(!name) return alert("يرجى إدخال الاسم");
             document.getElementById('finalName').innerText = name;
             document.getElementById('setup-screen').style.display = 'none';
             document.getElementById('experience-area').style.display = 'block';
@@ -114,13 +114,13 @@
         }
 
         function initScratch() {
-            canvas.width = 360; canvas.height = 580;
+            canvas.width = 360; canvas.height = 600;
             ctx.fillStyle = '#d4af37';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'black';
             ctx.font = 'bold 20px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('اقشط هنا لتكتشف المعايدة الرسمية ✨', 180, 290);
+            ctx.fillText('اِقشط هنا لِاستلام التَّهنئة الرَّسمية ✨', 180, 300);
             ctx.globalCompositeOperation = 'destination-out';
         }
 
@@ -130,15 +130,15 @@
             f.className = 'flower';
             f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
             f.style.left = Math.random() * 100 + 'vw';
-            f.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            f.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            f.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            f.style.animationDuration = (Math.random() * 3 + 5) + 's';
             document.body.appendChild(f);
-            setTimeout(() => f.remove(), 7000);
+            setTimeout(() => f.remove(), 8000);
         }
 
         function scratch(e) {
             if(!drawing) return;
-            if(!started) { audio.play(); started = true; setInterval(createFlower, 300); }
+            if(!started) { audio.play(); started = true; setInterval(createFlower, 250); }
             const rect = canvas.getBoundingClientRect();
             const x = (e.pageX || e.touches[0].pageX) - rect.left;
             const y = (e.pageY || e.touches[0].pageY) - rect.top;
@@ -155,13 +155,13 @@
 
         function share() {
             const n = document.getElementById('finalName').innerText;
-            window.open(`https://wa.me/?text=✨ تهنئة رسمية من مدرسة ابن سينا للمعلم/ة: ${n} %0Aشاهدها هنا: %0A${window.location.href}`);
+            window.open(`https://wa.me/?text=✨ تهنئة عيد الفطر الرسمية للمعلم/ة: ${n} %0Aمن مدرسة ابن سينا - نحف %0Aشاهدها هنا: %0A${window.location.href}`);
         }
 
         function download() {
             html2canvas(document.getElementById('card-content')).then(c => {
                 const a = document.createElement('a');
-                a.download = 'معايدة_ابن_سينا.png';
+                a.download = 'معايدة_ابن_سينا_نحف.png';
                 a.href = c.toDataURL();
                 a.click();
             });

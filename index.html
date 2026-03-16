@@ -3,69 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معايدة مدرسة ابن سينا التفاعلية</title>
+    <title>معايدة مدرسة ابن سينا الشاملة</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --gold: #d4af37; --dark: #050a10; }
-        body { margin: 0; background: var(--dark); font-family: 'Segoe UI', sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
+        :root { --gold: #d4af37; --dark-bg: #050a10; }
+        body { margin: 0; background: var(--dark-bg); font-family: 'Segoe UI', Tahoma, sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
 
-        /* 1. شاشة الدخول */
-        #entry-screen { text-align: center; background: #0a141d; padding: 40px; border-radius: 25px; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); z-index: 200; width: 320px; transition: 0.5s; }
-        .pulse-logo { width: 100px; filter: drop-shadow(0 0 10px var(--gold)); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        /* شاشة الدخول */
+        #setup-screen { text-align: center; background: #0a141d; padding: 40px; border-radius: 25px; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); z-index: 200; width: 320px; }
         
-        /* 2. منطقة المعايدة والقشط */
-        #experience-area { display: none; position: relative; width: 350px; height: 550px; z-index: 10; }
+        /* منطقة البطاقة والقشط */
+        #experience-area { display: none; position: relative; width: 360px; height: 580px; z-index: 10; }
         canvas#scratch { position: absolute; top: 0; left: 0; z-index: 20; border-radius: 20px; cursor: crosshair; touch-action: none; }
         
         #card-content { 
             background: linear-gradient(135deg, #0a141d 0%, #1a2a3a 100%);
             width: 100%; height: 100%; border-radius: 20px; border: 2px solid var(--gold);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; box-sizing: border-box; text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 30px 20px; box-sizing: border-box; text-align: center;
         }
 
-        .manager-sig { font-size: 0.9rem; color: #ccc; margin-bottom: 5px; }
-        h1 { color: var(--gold); font-size: 2.2rem; margin: 10px 0; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-        .teacher-box { font-size: 1.4rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.15); padding: 10px 20px; border-radius: 12px; margin: 15px 0; border: 1px dashed var(--gold); }
-        .coordinator-sig { font-size: 0.85rem; color: var(--gold); margin-top: 30px; border-top: 1px solid #333; width: 100%; pt: 10px; }
+        .school-header { color: var(--gold); font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
+        h1 { color: var(--gold); font-size: 2.4rem; margin: 10px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); }
+        
+        .greeting-message { font-size: 1.1rem; line-height: 1.8; color: #f0f0f0; margin: 15px 0; }
+        .teacher-box { font-size: 1.5rem; font-weight: bold; color: #fff; background: rgba(212, 175, 55, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); width: 80%; }
 
-        /* أزرار التحكم */
-        .ui-btns { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 350px; margin-top: 15px; z-index: 30; }
-        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        /* التوقيعات المتوازنة */
+        .signatures { display: flex; justify-content: space-between; width: 100%; margin-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 15px; }
+        .sig-box { flex: 1; font-size: 0.85rem; color: var(--gold); }
+        .sig-right { text-align: right; }
+        .sig-left { text-align: left; }
+
+        /* تأثير الورود */
+        .flower { position: fixed; top: -50px; z-index: 5; pointer-events: none; animation: fall linear forwards; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(50px); opacity: 0; }
+        }
+
+        .controls { display: none; grid-template-columns: 1fr 1fr; gap: 10px; width: 360px; margin-top: 15px; z-index: 30; }
+        .btn { padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
         .btn-entry { background: var(--gold); color: black; width: 100%; margin-top: 20px; font-size: 1.1rem; }
         .btn-wa { background: #25D366; color: white; }
         .btn-save { background: #3498db; color: white; }
-        .btn-mute { background: rgba(255,255,255,0.1); color: white; grid-column: span 2; border: 1px solid var(--gold); margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <div id="entry-screen">
-        <img src="logo.png" class="pulse-logo" alt="Logo">
-        <h2 style="color: var(--gold); margin-top: 15px;">مدرسة ابن سينا الشاملة</h2>
-        <input type="text" id="userName" placeholder="أدخل اسمك الكريم هنا..." 
-               style="background: transparent; border: none; border-bottom: 2px solid var(--gold); color: white; text-align: center; width: 100%; padding: 10px; outline: none; font-size: 1.1rem;">
-        <button class="btn btn-entry" onclick="startNow()">استلام المعايدة ✨</button>
+    <div id="setup-screen">
+        <img src="logo.png" style="width: 100px;">
+        <h2 style="color: var(--gold);">مدرسة ابن سينا الشاملة</h2>
+        <p>أهلاً بك.. يرجى إدخال الاسم:</p>
+        <input type="text" id="userName" placeholder="الاسم هنا..." 
+               style="background: transparent; border: none; border-bottom: 2px solid var(--gold); color: white; text-align: center; width: 100%; padding: 10px; outline: none; font-size: 1.2rem;">
+        <button class="btn btn-entry" onclick="startApp()">استلام التهنئة الرسمية ✨</button>
     </div>
 
     <div id="experience-area">
         <div id="card-content">
-            <img src="logo.png" style="width: 90px; margin-bottom: 10px;">
-            <div class="manager-sig">د. هيثم قادري - مدير المدرسة</div>
+            <div class="school-header">مدرسة ابن سينا الشاملة - الناصرة</div>
+            <img src="logo.png" style="width: 90px;">
+            
             <h1>عيد مبارك ✨</h1>
-            <p style="margin: 0;">بأسمى آيات التهاني يتقدم لكم المعلم/ة:</p>
+            
+            <div class="greeting-message">
+                تتقدم إدارة مدرسة ابن سينا بأسمى آيات التهنئة والتبريكات بمناسبة حلول العيد السعيد للمعلم/ة الفاضل/ة:
+            </div>
+            
             <div id="finalName" class="teacher-box"></div>
-            <p style="font-size: 0.9rem; opacity: 0.8;">كل عام وأنتم بألف خير</p>
-            <div class="coordinator-sig">إعداد وتصميم: مركز الحوسبة أ. عز الدين دعيبس</div>
+            
+            <div class="greeting-message" style="font-size: 0.9rem;">
+                نسأل الله أن يعيده عليكم بالخير واليمن والبركات وكل عام وأنتم بخير.
+            </div>
+
+            <div class="signatures">
+                <div class="sig-box sig-right">
+                    مدير المدرسة<br><b>د. هيثم قادري</b>
+                </div>
+                <div class="sig-box sig-left">
+                    مركز الحوسبة<br><b>أ. عز الدين دعيبس</b>
+                </div>
+            </div>
         </div>
         <canvas id="scratch"></canvas>
     </div>
 
-    <div class="controls ui-btns" id="controls">
+    <div class="controls" id="controls">
         <button class="btn btn-wa" onclick="share()">واتساب 📱</button>
         <button class="btn btn-save" onclick="download()">حفظ الصورة 🖼️</button>
-        <button id="muteBtn" class="btn btn-mute" onclick="toggleAudio()">🔊 كتم الصوت</button>
     </div>
 
     <audio id="music" src="music.mp3" loop></audio>
@@ -75,54 +101,50 @@
         const ctx = canvas.getContext('2d');
         const audio = document.getElementById('music');
         let drawing = false;
-        let played = false;
+        let started = false;
 
-        function startNow() {
+        function startApp() {
             const name = document.getElementById('userName').value;
-            if(!name) return alert("لطفاً، أدخل اسمك أولاً");
-            
+            if(!name) return alert("يرجى إدخال الاسم أولاً");
             document.getElementById('finalName').innerText = name;
-            document.getElementById('entry-screen').style.display = 'none';
+            document.getElementById('setup-screen').style.display = 'none';
             document.getElementById('experience-area').style.display = 'block';
             document.getElementById('controls').style.display = 'grid';
-            
             initScratch();
         }
 
         function initScratch() {
-            canvas.width = 350; canvas.height = 550;
+            canvas.width = 360; canvas.height = 580;
             ctx.fillStyle = '#d4af37';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#000';
+            ctx.fillStyle = 'black';
             ctx.font = 'bold 20px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('اقشط هنا لاستلام المفاجأة ✨', 175, 275);
-            
+            ctx.fillText('اقشط هنا لتكتشف المعايدة الرسمية ✨', 180, 290);
             ctx.globalCompositeOperation = 'destination-out';
+        }
+
+        function createFlower() {
+            const flowers = ['🌸', '🌺', '🌹', '🌷', '🌼', '🍃'];
+            const f = document.createElement('div');
+            f.className = 'flower';
+            f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+            f.style.left = Math.random() * 100 + 'vw';
+            f.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            f.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(f);
+            setTimeout(() => f.remove(), 7000);
         }
 
         function scratch(e) {
             if(!drawing) return;
-            if(!played) { audio.play(); played = true; launchFireworks(); }
-
+            if(!started) { audio.play(); started = true; setInterval(createFlower, 300); }
             const rect = canvas.getBoundingClientRect();
             const x = (e.pageX || e.touches[0].pageX) - rect.left;
             const y = (e.pageY || e.touches[0].pageY) - rect.top;
-            
             ctx.beginPath();
-            ctx.arc(x, y, 35, 0, Math.PI * 2);
+            ctx.arc(x, y, 40, 0, Math.PI * 2);
             ctx.fill();
-        }
-
-        function launchFireworks() {
-            var duration = 5 * 1000;
-            var end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#d4af37', '#ffffff'] });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#d4af37', '#ffffff'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
         }
 
         canvas.addEventListener('mousedown', () => drawing = true);
@@ -131,20 +153,15 @@
         canvas.addEventListener('touchstart', (e) => { drawing = true; scratch(e); });
         canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); });
 
-        function toggleAudio() {
-            if(audio.paused) { audio.play(); document.getElementById('muteBtn').innerText = "🔊 كتم الصوت"; }
-            else { audio.pause(); document.getElementById('muteBtn').innerText = "🔇 تشغيل الصوت"; }
-        }
-
         function share() {
             const n = document.getElementById('finalName').innerText;
-            window.open(`https://wa.me/?text=✨ تهنئة خاصة من المعلم/ة: ${n} %0Aشاهد المعايدة التفاعلية لمدرسة ابن سينا:%0A${window.location.href}`);
+            window.open(`https://wa.me/?text=✨ تهنئة رسمية من مدرسة ابن سينا للمعلم/ة: ${n} %0Aشاهدها هنا: %0A${window.location.href}`);
         }
 
         function download() {
             html2canvas(document.getElementById('card-content')).then(c => {
                 const a = document.createElement('a');
-                a.download = 'ibn-sina-greeting.png';
+                a.download = 'معايدة_ابن_سينا.png';
                 a.href = c.toDataURL();
                 a.click();
             });
